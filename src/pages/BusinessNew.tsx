@@ -57,6 +57,7 @@ const BusinessNew = () => {
           email: data.email,
           phone: data.phone,
           address: data.address,
+          user_id: user.id,
         });
 
       if (error) {
