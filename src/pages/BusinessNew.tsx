@@ -51,12 +51,10 @@ const BusinessNew = () => {
     try {
       const { error } = await supabase
         .from('businesses')
-        .insert([
-          {
-            ...data,
-            user_id: user.id,
-          },
-        ]);
+        .insert({
+          ...data,
+          user_id: user.id,
+        });
 
       if (error) {
         console.error('Error creating business:', error);
