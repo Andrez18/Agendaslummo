@@ -22,6 +22,8 @@ const Dashboard = () => {
   const [businesses, setBusinesses] = useState<Business[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const isAdmin = profile?.is_admin === true;
+
 
   useEffect(() => {
     if (!user) {
@@ -147,6 +149,28 @@ const Dashboard = () => {
               </p>
             </CardContent>
           </Card>
+          {isAdmin && (
+  <Card>
+    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+      <CardTitle className="text-sm font-medium">
+        Panel de Administrador
+      </CardTitle>
+      <Users className="h-4 w-4 text-muted-foreground" />
+    </CardHeader>
+    <CardContent>
+      <p className="text-sm text-muted-foreground mb-3">
+        Puedes registrar nuevos usuarios desde aquí.
+      </p>
+      <Button 
+        size="sm" 
+        onClick={() => navigate('/admin/register')}
+      >
+        Registrar Usuario
+      </Button>
+    </CardContent>
+  </Card>
+)}
+
         </div>
 
         {/* Businesses Section */}
