@@ -15,6 +15,7 @@ import Customers from "./pages/Customers";
 import Services from "./pages/Services";
 import Profile from "./pages/Profile";
 import BookingPublic from "./pages/BookingPublic";
+import AdminRegister from "./pages/AdminRegister";
 import NotFound from "./pages/NotFound";
 import Demo from "./pages/Demo";
 import BusinessDirectory from "./pages/BusinessDirectory";
@@ -42,6 +43,8 @@ const App = () => (
             <Route path="/customers" element={<Customers />} />
             <Route path="/services" element={<Services />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/admin/register" element={<AdminRegister />} />
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
