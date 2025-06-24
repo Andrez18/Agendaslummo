@@ -15,6 +15,7 @@ import Bookings from "./pages/Bookings";
 import Customers from "./pages/Customers";
 import Services from "./pages/Services";
 import Profile from "./pages/Profile";
+import BookingPublic from "./pages/BookingPublic";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/business/new" element={<BusinessNew />} />
             <Route path="/business/:id" element={<BusinessDetails />} />
             <Route path="/business/:id/settings" element={<BusinessSettings />} />
+            <Route path="/booking/:businessId" element={<BookingPublic />} />
             <Route path="/bookings" element={<Bookings />} />
             <Route path="/customers" element={<Customers />} />
             <Route path="/services" element={<Services />} />

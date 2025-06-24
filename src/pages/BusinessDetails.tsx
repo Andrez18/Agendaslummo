@@ -1,11 +1,11 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
-import { ArrowLeft, Building2, Mail, Phone, MapPin, Clock, Settings } from 'lucide-react';
+import { ArrowLeft, Building2, Mail, Phone, MapPin, Clock, Settings, Share2, Copy } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 interface Business {
   id: string;
@@ -25,6 +25,7 @@ const BusinessDetails = () => {
   const navigate = useNavigate();
   const [business, setBusiness] = useState<Business | null>(null);
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
 
   useEffect(() => {
     if (!user || !id) {
@@ -79,6 +80,28 @@ const BusinessDetails = () => {
     }).filter(Boolean);
   };
 
+  const copyBookingLink = () => {
+    const bookingUrl = `${window.location.origin}/booking/${business?.id}`;
+    navigator.clipboard.writeText(bookingUrl);
+    toast({
+      title: "¡Enlace copiado!",
+      description: "El enlace de reservas ha sido copiado al portapapeles",
+    });
+  };
+
+  const shareBookingLink = () => {
+    const bookingUrl = `${window.location.origin}/booking/${business?.id}`;
+    if (navigator.share) {
+      navigator.share({
+        title: `Reservar en ${business?.name}`,
+        text: `Haz tu reserva en ${business?.name}`,
+        url: bookingUrl,
+      });
+    } else {
+      copyBookingLink();
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -127,6 +150,34 @@ const BusinessDetails = () => {
 
       {/* Main content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Public booking link card */}
+        <Card className="mb-8 bg-blue-50 border-blue-200">
+          <CardHeader>
+            <CardTitle className="flex items-center text-blue-900">
+              <Share2 className="h-5 w-5 mr-2" />
+              Enlace Público de Reservas
+            </CardTitle>
+            <CardDescription className="text-blue-700">
+              Comparte este enlace con tus clientes para que puedan hacer reservas online
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center gap-2">
+              <div className="flex-1 bg-white p-3 rounded border text-sm">
+                {window.location.origin}/booking/{business.id}
+              </div>
+              <Button onClick={copyBookingLink} variant="outline" size="sm">
+                <Copy className="h-4 w-4 mr-2" />
+                Copiar
+              </Button>
+              <Button onClick={shareBookingLink} size="sm">
+                <Share2 className="h-4 w-4 mr-2" />
+                Compartir
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Información general */}
           <Card>
@@ -211,6 +262,11 @@ const BusinessDetails = () => {
           
           <Button variant="outline" onClick={() => navigate('/bookings')}>
             Ver Reservas
+          </Button>
+
+          <Button variant="outline" onClick={() => window.open(`/booking/${business.id}`, '_blank')}>
+            <Share2 className="h-4 w-4 mr-2" />
+            Ver Página de Reservas
           </Button>
         </div>
       </main>
