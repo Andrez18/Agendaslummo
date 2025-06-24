@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -66,8 +65,55 @@ const Index = () => {
               <ArrowRight className="h-5 w-5 mr-2" />
               Comenzar Gratis
             </Button>
-            <Button size="lg" variant="outline" className="text-lg px-8">
+            <Button size="lg" variant="outline" className="text-lg px-8" onClick={() => navigate('/demo')}>
               Ver Demo
+            </Button>
+          </div>
+        </div>
+
+        {/* Quick Access Section */}
+        <div className="mb-16 bg-white rounded-2xl p-8 shadow-lg">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+            Acceso Rápido
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="h-auto p-6 flex flex-col items-center gap-3"
+              onClick={() => navigate('/businesses')}
+            >
+              <Building2 className="h-8 w-8 text-blue-600" />
+              <div className="text-center">
+                <div className="font-semibold">Explorar Negocios</div>
+                <div className="text-sm text-gray-600">Encuentra servicios cerca de ti</div>
+              </div>
+            </Button>
+            
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="h-auto p-6 flex flex-col items-center gap-3"
+              onClick={() => navigate('/demo')}
+            >
+              <CalendarDays className="h-8 w-8 text-blue-600" />
+              <div className="text-center">
+                <div className="font-semibold">Ver Demo</div>
+                <div className="text-sm text-gray-600">Conoce todas las funcionalidades</div>
+              </div>
+            </Button>
+            
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="h-auto p-6 flex flex-col items-center gap-3"
+              onClick={() => navigate('/auth')}
+            >
+              <Users className="h-8 w-8 text-blue-600" />
+              <div className="text-center">
+                <div className="font-semibold">Para Negocios</div>
+                <div className="text-sm text-gray-600">Gestiona tu negocio online</div>
+              </div>
             </Button>
           </div>
         </div>
