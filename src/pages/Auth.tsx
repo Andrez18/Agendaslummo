@@ -162,22 +162,6 @@ const Auth = () => {
               <Button type="submit" className="w-full" disabled={loading}>
                 {loading ? 'Procesando...' : (isLogin ? 'Iniciar Sesión' : 'Crear Cuenta')}
               </Button>
-              
-              <Button
-                type="button"
-                variant="ghost"
-                className="w-full"
-                onClick={() => {
-                  setIsLogin(!isLogin);
-                  setError('');
-                  setMessage('');
-                }}
-              >
-                {isLogin 
-                  ? '¿No tienes cuenta? Regístrate aquí' 
-                  : '¿Ya tienes cuenta? Inicia sesión'
-                }
-              </Button>
             </CardFooter>
           </form>
         </Card>
