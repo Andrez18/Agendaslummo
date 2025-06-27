@@ -138,34 +138,37 @@ const Services = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Cargando servicios...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-muted-foreground">Cargando servicios...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="bg-card shadow-sm border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
               <Button 
                 variant="ghost" 
                 onClick={() => navigate('/dashboard')}
-                className="mr-4"
+                className="mr-4 focus-ring"
               >
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Volver
               </Button>
-              <Settings className="h-8 w-8 text-blue-600 mr-3" />
-              <h1 className="text-2xl font-bold text-gray-900">Mis Servicios</h1>
+              <Settings className="h-8 w-8 text-primary mr-3" />
+              <h1 className="text-2xl font-bold text-foreground">Mis Servicios</h1>
             </div>
-            <Button onClick={() => navigate('/services/new')}>
+            <Button 
+              onClick={() => navigate('/services/new')}
+              className="btn-hover"
+            >
               <Plus className="h-4 w-4 mr-2" />
               Agregar Servicio
             </Button>
@@ -175,7 +178,7 @@ const Services = () => {
 
       {/* Main content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Card>
+        <Card className="gradient-card">
           <CardHeader>
             <CardTitle>Servicios</CardTitle>
             <CardDescription>
@@ -185,66 +188,75 @@ const Services = () => {
           <CardContent>
             {services.length === 0 ? (
               <div className="text-center py-12">
-                <Settings className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay servicios</h3>
-                <p className="text-gray-600 mb-4">Aún no tienes servicios registrados</p>
-                <Button onClick={() => navigate('/services/new')}>
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Settings className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-lg font-semibold text-foreground mb-2">No hay servicios</h3>
+                <p className="text-muted-foreground mb-6">Aún no tienes servicios registrados</p>
+                <Button 
+                  onClick={() => navigate('/services/new')}
+                  className="btn-hover"
+                >
                   <Plus className="h-4 w-4 mr-2" />
                   Crear mi primer servicio
                 </Button>
               </div>
             ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Servicio</TableHead>
-                    <TableHead>Descripción</TableHead>
-                    <TableHead>Precio</TableHead>
-                    <TableHead>Duración</TableHead>
-                    <TableHead>Estado</TableHead>
-                    <TableHead>Negocio</TableHead>
-                    <TableHead>Acciones</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {services.map((service) => (
-                    <TableRow key={service.id}>
-                      <TableCell className="font-medium">{service.name}</TableCell>
-                      <TableCell>
-                        <div className="max-w-xs truncate">
-                          {service.description || 'Sin descripción'}
-                        </div>
-                      </TableCell>
-                      <TableCell>€{service.price}</TableCell>
-                      <TableCell>{formatDuration(service.duration)}</TableCell>
-                      <TableCell>
-                        <Badge variant={service.is_active ? 'default' : 'secondary'}>
-                          {service.is_active ? 'Activo' : 'Inactivo'}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>{service.business?.name}</TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          <Button 
-                            size="sm" 
-                            variant="outline"
-                            onClick={() => navigate(`/services/${service.id}/edit`)}
-                          >
-                            <Edit className="h-4 w-4" />
-                          </Button>
-                          <Button 
-                            size="sm" 
-                            variant="outline"
-                            onClick={() => handleDelete(service.id)}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </TableCell>
+              <div className="rounded-lg border border-border overflow-hidden">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="bg-muted/50">
+                      <TableHead className="font-semibold">Servicio</TableHead>
+                      <TableHead className="font-semibold">Descripción</TableHead>
+                      <TableHead className="font-semibold">Precio</TableHead>
+                      <TableHead className="font-semibold">Duración</TableHead>
+                      <TableHead className="font-semibold">Estado</TableHead>
+                      <TableHead className="font-semibold">Negocio</TableHead>
+                      <TableHead className="font-semibold">Acciones</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {services.map((service) => (
+                      <TableRow key={service.id} className="hover:bg-muted/30 transition-colors">
+                        <TableCell className="font-medium text-foreground">{service.name}</TableCell>
+                        <TableCell>
+                          <div className="max-w-xs truncate text-muted-foreground">
+                            {service.description || 'Sin descripción'}
+                          </div>
+                        </TableCell>
+                        <TableCell className="font-semibold text-primary">€{service.price}</TableCell>
+                        <TableCell className="text-muted-foreground">{formatDuration(service.duration)}</TableCell>
+                        <TableCell>
+                          <Badge variant={service.is_active ? 'default' : 'secondary'}>
+                            {service.is_active ? 'Activo' : 'Inactivo'}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">{service.business?.name}</TableCell>
+                        <TableCell>
+                          <div className="flex gap-2">
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              onClick={() => navigate(`/services/${service.id}/edit`)}
+                              className="focus-ring"
+                            >
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              onClick={() => handleDelete(service.id)}
+                              className="focus-ring hover:bg-destructive/10 hover:text-destructive"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             )}
           </CardContent>
         </Card>

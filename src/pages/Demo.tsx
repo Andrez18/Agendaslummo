@@ -1,255 +1,259 @@
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { CalendarDays, Clock, Users, Building2, ArrowLeft, CheckCircle, Star } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Calendar, Users, Clock, Settings, BarChart3, ArrowRight, Play, CheckCircle, Star } from 'lucide-react';
 
 const Demo = () => {
-  const navigate = useNavigate();
-
   const features = [
     {
-      icon: CalendarDays,
-      title: "Calendario Inteligente",
-      description: "Gestiona todas tus reservas en un calendario fácil de usar con disponibilidad automática."
-    },
-    {
-      icon: Clock,
-      title: "Automatización Total",
-      description: "Confirmaciones automáticas por WhatsApp, recordatorios y gestión sin intervención manual."
+      icon: Calendar,
+      title: "Gestión de Citas",
+      description: "Agenda citas fácilmente con nuestro calendario intuitivo",
+      demo: "Ver calendario en vivo"
     },
     {
       icon: Users,
-      title: "Gestión de Clientes",
-      description: "Base de datos completa de clientes con historial de reservas y comunicación directa."
+      title: "Base de Clientes",
+      description: "Mantén toda la información de tus clientes organizada",
+      demo: "Explorar clientes"
     },
     {
-      icon: Building2,
-      title: "Multi-negocio",
-      description: "Gestiona múltiples ubicaciones o negocios desde una sola plataforma."
+      icon: Settings,
+      title: "Configuración de Servicios",
+      description: "Define precios, duración y detalles de cada servicio",
+      demo: "Configurar servicios"
+    },
+    {
+      icon: BarChart3,
+      title: "Reportes y Analytics",
+      description: "Analiza el rendimiento de tu negocio con reportes detallados",
+      demo: "Ver estadísticas"
     }
   ];
 
-  const testimonials = [
+  const benefits = [
+    "Aumenta tus reservas hasta un 40%",
+    "Reduce el tiempo de gestión en 3 horas diarias",
+    "Elimina las citas duplicadas y errores",
+    "Mejora la satisfacción del cliente",
+    "Acceso 24/7 desde cualquier dispositivo",
+    "Notificaciones automáticas por email y SMS"
+  ];
+
+  const steps = [
     {
-      name: "María González",
-      business: "Salón de Belleza Elegance",
-      rating: 5,
-      comment: "Desde que uso esta plataforma, mis reservas se organizan solas. Mis clientes pueden reservar 24/7 y yo me enfoco en lo importante."
+      number: "01",
+      title: "Regístrate",
+      description: "Crea tu cuenta gratuita en menos de 2 minutos"
     },
     {
-      name: "Carlos Mendez",
-      business: "Clínica Dental Sonrisas",
-      rating: 5,
-      comment: "La automatización de recordatorios ha reducido las ausencias en un 80%. Excelente herramienta."
+      number: "02",
+      title: "Configura tu Negocio",
+      description: "Añade tus servicios, horarios y información básica"
     },
     {
-      name: "Ana Ruiz",
-      business: "Centro de Fisioterapia",
-      rating: 5,
-      comment: "Fácil de usar y muy completa. Mis pacientes están encantados con poder reservar online."
+      number: "03",
+      title: "Comparte tu Enlace",
+      description: "Tus clientes pueden reservar directamente desde tu enlace personalizado"
+    },
+    {
+      number: "04",
+      title: "Gestiona y Crece",
+      description: "Administra todas tus citas desde un solo lugar"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      {/* Header */}
-      <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200">
+    <div className="min-h-screen bg-background">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-primary/5"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+          <div className="text-center">
+            <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">
+              <Play className="h-3 w-3 mr-1" />
+              Demo Interactivo
+            </Badge>
+            <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
+              Descubre cómo funciona
+              <span className="text-primary block">nuestra plataforma</span>
+            </h1>
+            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+              Explora todas las funcionalidades que te ayudarán a gestionar tu negocio 
+              de manera más eficiente y profesional.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                size="lg" 
+                className="btn-hover text-lg px-8 py-6"
+                onClick={() => window.location.href = '/auth'}
+              >
+                Comenzar Gratis
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="btn-hover text-lg px-8 py-6"
+                onClick={() => window.location.href = '/businesses'}
+              >
+                Ver Negocios
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Demo */}
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center h-16">
-            <Button 
-              variant="ghost" 
-              onClick={() => navigate('/')}
-              className="mr-4"
-            >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Volver
-            </Button>
-            <div className="flex items-center">
-              <img src="/logo_claro.png" className="h-12 w-12 mr-3" />
-              <h1 className="text-2xl font-bold text-gray-900">Demo - Reservas Online</h1>
-            </div>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Funcionalidades Principales
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              Descubre cómo cada herramienta puede transformar tu negocio
+            </p>
           </div>
-        </div>
-      </header>
-
-      {/* Hero Demo Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Ve cómo funciona
-            <span className="text-blue-600 block">nuestra plataforma</span>
-          </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-            Descubre todas las funcionalidades que harán crecer tu negocio y simplificarán tu día a día.
-          </p>
-        </div>
-
-        {/* Interactive Demo */}
-        <div className="bg-white rounded-2xl shadow-lg p-8 mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Demo Interactiva</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-gray-900">Para Negocios:</h3>
-              <Button 
-                className="w-full justify-start" 
-                onClick={() => navigate('/auth')}
-              >
-                <Building2 className="h-4 w-4 mr-2" />
-                Panel de Control del Negocio
-              </Button>
-              <Button 
-                variant="outline" 
-                className="w-full justify-start"
-                onClick={() => navigate('/businesses')}
-              >
-                <Users className="h-4 w-4 mr-2" />
-                Ver Directorio de Negocios
-              </Button>
-            </div>
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-gray-900">Para Clientes:</h3>
-              <Button 
-                variant="outline" 
-                className="w-full justify-start"
-                onClick={() => navigate('/businesses')}
-              >
-                <CalendarDays className="h-4 w-4 mr-2" />
-                Buscar y Reservar Servicios
-              </Button>
-              <Button 
-                variant="outline" 
-                className="w-full justify-start"
-                onClick={() => window.open('/booking/demo', '_blank')}
-              >
-                <Clock className="h-4 w-4 mr-2" />
-                Ver Página de Reserva
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* Features */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {features.map((feature, index) => (
-            <Card key={index} className="text-center hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <feature.icon className="h-12 w-12 text-blue-600 mx-auto mb-4" />
-                <CardTitle className="text-lg">{feature.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">{feature.description}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Testimonials */}
-        <section className="bg-white rounded-2xl p-8 mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-            Lo que dicen nuestros clientes
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="border-l-4 border-l-blue-600">
+          
+          <div className="grid gap-8 md:grid-cols-2">
+            {features.map((feature, index) => (
+              <Card key={index} className="gradient-card hover:shadow-lg transition-all duration-200 group">
                 <CardHeader>
-                  <div className="flex items-center gap-2 mb-2">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    ))}
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                    <feature.icon className="h-6 w-6 text-primary" />
                   </div>
-                  <CardTitle className="text-lg">{testimonial.name}</CardTitle>
-                  <p className="text-sm text-gray-600">{testimonial.business}</p>
+                  <CardTitle className="text-xl">{feature.title}</CardTitle>
+                  <CardDescription className="text-base">
+                    {feature.description}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-700 italic">"{testimonial.comment}"</p>
+                  <Button 
+                    variant="outline" 
+                    className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                  >
+                    <Play className="h-4 w-4 mr-2" />
+                    {feature.demo}
+                  </Button>
                 </CardContent>
               </Card>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Benefits */}
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-12">
-          <div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">
-              Beneficios comprobados
+      {/* Benefits Section */}
+      <section className="py-20 bg-muted/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Beneficios Comprobados
             </h2>
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <CheckCircle className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="font-semibold text-gray-900">80% menos ausencias</h4>
-                  <p className="text-gray-600">Los recordatorios automáticos reducen significativamente las no-presentaciones</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-3">
-                <CheckCircle className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="font-semibold text-gray-900">Disponible 24/7</h4>
-                  <p className="text-gray-600">Tus clientes pueden reservar en cualquier momento, incluso fuera del horario comercial</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-3">
-                <CheckCircle className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="font-semibold text-gray-900">Ahorra 5+ horas semanales</h4>
-                  <p className="text-gray-600">Automatiza la gestión de reservas y enfócate en tu negocio</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-3">
-                <CheckCircle className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="font-semibold text-gray-900">Aumento del 40% en reservas</h4>
-                  <p className="text-gray-600">La facilidad de reserva online atrae más clientes</p>
-                </div>
-              </div>
-            </div>
+            <p className="text-xl text-muted-foreground">
+              Resultados reales de empresarios como tú
+            </p>
           </div>
           
-          <div className="bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl p-8 text-center">
-            <CalendarDays className="h-16 w-16 text-blue-600 mx-auto mb-4" />
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">
-              ¿Listo para probarlo?
-            </h3>
-            <p className="text-gray-600 mb-6">
-              Comienza gratis y descubre por qué cientos de negocios confían en nosotros
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {benefits.map((benefit, index) => (
+              <div key={index} className="flex items-center p-4 bg-card rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                <CheckCircle className="h-5 w-5 text-primary mr-3 flex-shrink-0" />
+                <span className="text-foreground">{benefit}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How it Works */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Cómo Empezar
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              En 4 simples pasos tendrás tu negocio funcionando
             </p>
-            <Button size="lg" className="w-full mb-4" onClick={() => navigate('/auth')}>
+          </div>
+          
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+            {steps.map((step, index) => (
+              <Card key={index} className="gradient-card text-center hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl font-bold text-primary">{step.number}</span>
+                  </div>
+                  <CardTitle className="text-lg">{step.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-base">
+                    {step.description}
+                  </CardDescription>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonial Section */}
+      <section className="py-20 bg-primary/5">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <Card className="gradient-card">
+            <CardContent className="pt-8">
+              <div className="flex justify-center mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="h-5 w-5 fill-primary text-primary" />
+                ))}
+              </div>
+              <blockquote className="text-xl text-foreground mb-6">
+                "Esta plataforma transformó completamente la forma en que gestiono mi salón. 
+                Mis clientes están más satisfechos y yo tengo más tiempo para lo que realmente importa."
+              </blockquote>
+              <div>
+                <p className="font-semibold text-foreground">Carmen Rodríguez</p>
+                <p className="text-muted-foreground">Propietaria, Salón Carmen</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            ¿Listo para empezar?
+          </h2>
+          <p className="text-xl text-muted-foreground mb-8">
+            Únete a más de 1,000 negocios que ya confían en nosotros
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              size="lg" 
+              className="btn-hover text-lg px-8 py-6"
+              onClick={() => window.location.href = '/auth'}
+            >
               Comenzar Gratis Ahora
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Button 
-              variant="outline" 
               size="lg" 
-              className="w-full"
-              onClick={() => navigate('/businesses')}
+              variant="outline" 
+              className="btn-hover text-lg px-8 py-6"
+              onClick={() => window.location.href = '/businesses'}
             >
               Explorar Negocios
             </Button>
           </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="text-center bg-blue-600 rounded-2xl p-12 text-white">
-          <h2 className="text-3xl font-bold mb-4">
-            ¿Tienes preguntas?
-          </h2>
-          <p className="text-xl text-blue-100 mb-8">
-            Nuestro equipo está aquí para ayudarte a hacer crecer tu negocio
+          <p className="text-sm text-muted-foreground mt-4">
+            Sin compromiso • Sin tarjeta de crédito • Soporte gratuito
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" className="text-lg px-8" onClick={() => navigate('/auth')}>
-              Empezar Ahora
-            </Button>
-            <Button size="lg" variant="outline" className="text-lg px-8 text-white border-white hover:bg-white hover:text-blue-600">
-              Contactar Soporte
-            </Button>
-          </div>
-        </section>
+        </div>
       </section>
     </div>
   );
