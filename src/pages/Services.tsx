@@ -106,6 +106,36 @@ const Services = () => {
     }
   };
 
+  const handleDelete = async (serviceId: string) => {
+    if (!confirm('¿Estás seguro de que quieres eliminar este servicio?')) {
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('services')
+        .delete()
+        .eq('id', serviceId);
+
+      if (error) {
+        console.error('Error deleting service:', error);
+        toast({
+          title: "Error",
+          description: "No se pudo eliminar el servicio",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "¡Éxito!",
+          description: "Servicio eliminado correctamente",
+        });
+        fetchServices(); // Refresh the list
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -135,7 +165,7 @@ const Services = () => {
               <Settings className="h-8 w-8 text-blue-600 mr-3" />
               <h1 className="text-2xl font-bold text-gray-900">Mis Servicios</h1>
             </div>
-            <Button>
+            <Button onClick={() => navigate('/services/new')}>
               <Plus className="h-4 w-4 mr-2" />
               Agregar Servicio
             </Button>
@@ -158,7 +188,7 @@ const Services = () => {
                 <Settings className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay servicios</h3>
                 <p className="text-gray-600 mb-4">Aún no tienes servicios registrados</p>
-                <Button>
+                <Button onClick={() => navigate('/services/new')}>
                   <Plus className="h-4 w-4 mr-2" />
                   Crear mi primer servicio
                 </Button>
@@ -195,10 +225,18 @@ const Services = () => {
                       <TableCell>{service.business?.name}</TableCell>
                       <TableCell>
                         <div className="flex gap-2">
-                          <Button size="sm" variant="outline">
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            onClick={() => navigate(`/services/${service.id}/edit`)}
+                          >
                             <Edit className="h-4 w-4" />
                           </Button>
-                          <Button size="sm" variant="outline">
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            onClick={() => handleDelete(service.id)}
+                          >
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>

@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -13,6 +14,7 @@ import BusinessSettings from "./pages/BusinessSettings";
 import Bookings from "./pages/Bookings";
 import Customers from "./pages/Customers";
 import Services from "./pages/Services";
+import ServiceNew from "./pages/ServiceNew";
 import Profile from "./pages/Profile";
 import BookingPublic from "./pages/BookingPublic";
 import AdminRegister from "./pages/AdminRegister";
@@ -42,6 +44,7 @@ const App = () => (
             <Route path="/bookings" element={<Bookings />} />
             <Route path="/customers" element={<Customers />} />
             <Route path="/services" element={<Services />} />
+            <Route path="/services/new" element={<ServiceNew />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/admin/register" element={<AdminRegister />} />
 
