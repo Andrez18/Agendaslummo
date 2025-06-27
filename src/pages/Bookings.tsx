@@ -48,6 +48,25 @@ const Bookings = () => {
 
   const fetchBookings = async () => {
     try {
+      // First get all businesses for this user
+      const { data: businesses, error: businessError } = await supabase
+        .from('businesses')
+        .select('id')
+        .eq('user_id', user?.id);
+
+      if (businessError) {
+        console.error('Error fetching businesses:', businessError);
+        return;
+      }
+
+      if (!businesses || businesses.length === 0) {
+        setBookings([]);
+        setLoading(false);
+        return;
+      }
+
+      const businessIds = businesses.map(b => b.id);
+
       const { data, error } = await supabase
         .from('bookings')
         .select(`
@@ -56,6 +75,7 @@ const Bookings = () => {
           services(name, price),
           businesses(name)
         `)
+        .in('business_id', businessIds)
         .order('booking_date', { ascending: false });
 
       if (error) {
@@ -106,19 +126,19 @@ const Bookings = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Cargando reservas...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-muted-foreground">Cargando reservas...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="bg-card shadow-sm border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center h-16">
             <Button 
@@ -129,15 +149,15 @@ const Bookings = () => {
               <ArrowLeft className="h-4 w-4 mr-2" />
               Volver
             </Button>
-            <CalendarDays className="h-8 w-8 text-blue-600 mr-3" />
-            <h1 className="text-2xl font-bold text-gray-900">Reservas</h1>
+            <CalendarDays className="h-8 w-8 text-primary mr-3" />
+            <h1 className="text-2xl font-bold text-foreground">Reservas</h1>
           </div>
         </div>
       </header>
 
       {/* Main content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Card>
+        <Card className="gradient-card">
           <CardHeader>
             <CardTitle>Todas las Reservas</CardTitle>
             <CardDescription>
@@ -147,69 +167,71 @@ const Bookings = () => {
           <CardContent>
             {bookings.length === 0 ? (
               <div className="text-center py-12">
-                <CalendarDays className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay reservas</h3>
-                <p className="text-gray-600">Aún no tienes reservas registradas</p>
+                <CalendarDays className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-foreground mb-2">No hay reservas</h3>
+                <p className="text-muted-foreground">Aún no tienes reservas registradas</p>
               </div>
             ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Cliente</TableHead>
-                    <TableHead>Servicio</TableHead>
-                    <TableHead>Fecha</TableHead>
-                    <TableHead>Hora</TableHead>
-                    <TableHead>Estado</TableHead>
-                    <TableHead>Negocio</TableHead>
-                    <TableHead>Acciones</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {bookings.map((booking) => (
-                    <TableRow key={booking.id}>
-                      <TableCell>
-                        <div>
-                          <div className="font-medium">{booking.customer?.name}</div>
-                          <div className="text-sm text-gray-500">{booking.customer?.email}</div>
-                          <div className="text-sm text-gray-500">{booking.customer?.phone}</div>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div>
-                          <div className="font-medium">{booking.service?.name}</div>
-                          <div className="text-sm text-gray-500">€{booking.service?.price}</div>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        {new Date(booking.booking_date).toLocaleDateString('es-ES')}
-                      </TableCell>
-                      <TableCell>
-                        {booking.start_time} - {booking.end_time}
-                      </TableCell>
-                      <TableCell>
-                        {getStatusBadge(booking.status)}
-                      </TableCell>
-                      <TableCell>{booking.business?.name}</TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => sendWhatsAppReminder(
-                              booking.customer?.phone,
-                              booking.customer?.name,
-                              new Date(booking.booking_date).toLocaleDateString('es-ES'),
-                              booking.start_time
-                            )}
-                          >
-                            <MessageSquare className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </TableCell>
+              <div className="rounded-lg border border-border overflow-hidden">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="bg-muted/50">
+                      <TableHead className="font-semibold">Cliente</TableHead>
+                      <TableHead className="font-semibold">Servicio</TableHead>
+                      <TableHead className="font-semibold">Fecha</TableHead>
+                      <TableHead className="font-semibold">Hora</TableHead>
+                      <TableHead className="font-semibold">Estado</TableHead>
+                      <TableHead className="font-semibold">Negocio</TableHead>
+                      <TableHead className="font-semibold">Acciones</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {bookings.map((booking) => (
+                      <TableRow key={booking.id} className="hover:bg-muted/30 transition-colors">
+                        <TableCell>
+                          <div>
+                            <div className="font-medium text-foreground">{booking.customer?.name}</div>
+                            <div className="text-sm text-muted-foreground">{booking.customer?.email}</div>
+                            <div className="text-sm text-muted-foreground">{booking.customer?.phone}</div>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div>
+                            <div className="font-medium text-foreground">{booking.service?.name}</div>
+                            <div className="text-sm text-primary">€{booking.service?.price}</div>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-foreground">
+                          {new Date(booking.booking_date).toLocaleDateString('es-ES')}
+                        </TableCell>
+                        <TableCell className="text-foreground">
+                          {booking.start_time} - {booking.end_time}
+                        </TableCell>
+                        <TableCell>
+                          {getStatusBadge(booking.status)}
+                        </TableCell>
+                        <TableCell className="text-foreground">{booking.business?.name}</TableCell>
+                        <TableCell>
+                          <div className="flex gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => sendWhatsAppReminder(
+                                booking.customer?.phone,
+                                booking.customer?.name,
+                                new Date(booking.booking_date).toLocaleDateString('es-ES'),
+                                booking.start_time
+                              )}
+                            >
+                              <MessageSquare className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             )}
           </CardContent>
         </Card>
